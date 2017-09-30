@@ -1,53 +1,63 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+
+    <!-- JUMBOTRON -->
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+
+            <!-- CAROUSEL -->
+            <div id="helloCarousel" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <li data-target="#helloCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#helloCarousel" data-slide-to="1"></li>
+                <li data-target="#helloCarousel" data-slide-to="2"></li>
+              </ol>
+              <div class="carousel-inner" role="listbox">
+                <div class="carousel-item active">
+                  <img class="d-block img-fluid" src="http://lorempixel.com/400/200" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                  <img class="d-block img-fluid" src="http://lorempixel.com/400/200" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                  <img class="d-block img-fluid" src="http://lorempixel.com/400/200" alt="Third slide">
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#helloCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#helloCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            <!-- FIN CAROUSEL -->
+
+          </div>
+          <div class="col-8">
+
+            <!-- INTRODUCTION + BOUTTON REJOINDRE -->
+            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus nisi. Nulla pulvinar, augue non ultricies tristique, felis nisi tempor purus, non varius mi quam at libero. Nulla nec augue sodales, congue ex eu, dictum mauris. Fusce fermentum justo ut dolor sodales eleifend. Orci varius 
+            </p>
+            <p>
+              <a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a>
+            </p>
+            <!-- FIN INTRODUCTION + BOUTTON REJOINDRE -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIN JUMBOTRON -->
+
   </div>
 </template>
-
 <script>
-export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  export default {
+    name: 'Hello'
   }
-}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-</style>

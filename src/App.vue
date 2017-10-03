@@ -16,6 +16,9 @@
           <li class="nav-item">
             <router-link to="Pricing" class="nav-link"> Prix </router-link>
           </li>
+          <li class="nav-item" v-if="isLoggedIn">
+            <a class="nav-link" @click.prevent="logout"> Deconnexion </a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -131,6 +134,15 @@ export default {
       .then(function(response){
         console.log(response);
       });
+    },
+    logout(){
+      this.$store.dispatch('logout')
+      this.$router.push('/')
+    }
+  },
+  computed: {
+    isLoggedIn(){
+      return this.$store.getters.isLoggedIn
     }
   }
 }

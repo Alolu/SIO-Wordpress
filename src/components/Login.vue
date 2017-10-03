@@ -1,7 +1,7 @@
 <template>
 	<div class="login">
 		<div class="container mt-5">
-	        <form class="form-horizontal" role="form" method="POST" action="/login">
+	        <form class="form-horizontal" role="form" method="POST" v-on:submit.prevent>
 	            <div class="row">
 	                <div class="col-md-3"></div>
 	                <div class="col-md-6">
@@ -17,7 +17,7 @@
 	                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 	                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
 	                            <input type="text" name="email" class="form-control" id="email"
-	                                   placeholder="vous@exemple.com" required autofocus>
+	                                   placeholder="vous@exemple.com" v-model="mail" required autofocus>
 	                        </div>
 	                    </div>
 	                </div>
@@ -37,7 +37,7 @@
 	                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 	                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
 	                            <input type="password" name="password" class="form-control" id="password"
-	                                   placeholder="Mot de passe" required>
+	                                   placeholder="Mot de passe" v-model="pass" required>
 	                        </div>
 	                    </div>
 	                </div>
@@ -55,7 +55,7 @@
 	                    <div class="form-check mb-2 mr-sm-2 mb-sm-0">
 	                        <label class="form-check-label">
 	                            <input class="form-check-input" name="remember"
-	                                   type="checkbox" >
+	                                   type="checkbox">
 	                            <span style="padding-bottom: .15rem">Remember me</span>
 	                        </label>
 	                    </div>
@@ -78,17 +78,28 @@
     name: 'Login',
     data(){
     	return{
-    		mail: 'test@test.test',
-    		pass: 'test'
+    		mail: '',
+    		pass: ''
     	}
     },
     methods: {
     	login() {
 		    this.$store.dispatch('login',{
 		    	mail : this.mail,
-		    	pass : this.pass
+		    	pass : this.pass,
+		    	redirect : this.$route.query.redirect
 		    })
 		},
+    },
+    computed: {
+    	isLoggedIn: function(){
+    		return this.$store.getters.isLoggedIn
+    	}
+    },
+    watch: {
+    	isLoggedIn: function(){
+    		this.$router.push(this.$route.query.redirect)
+    	}
     }
   }
 </script>

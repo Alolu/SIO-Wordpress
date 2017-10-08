@@ -82,12 +82,18 @@
     		pass: ''
     	}
     },
+    beforeRouteLeave (to, from, next) {
+    	if(to.name == "Pricing" && !this.isLoggedIn){
+    		console.log("unauthorized");
+    	}else{
+    		next()
+    	}
+  	},
     methods: {
     	login() {
 		    this.$store.dispatch('login',{
 		    	mail : this.mail,
-		    	pass : this.pass,
-		    	redirect : this.$route.query.redirect
+		    	pass : this.pass
 		    })
 		},
     },
@@ -98,7 +104,11 @@
     },
     watch: {
     	isLoggedIn: function(){
-    		this.$router.push(this.$route.query.redirect)
+    		if(!this.$route.query.redirect){
+    			this.$router.push('/');
+    		}else{
+    			this.$router.push(this.$route.query.redirect)
+    		}
     	}
     }
   }

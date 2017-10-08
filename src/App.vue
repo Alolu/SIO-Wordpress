@@ -14,7 +14,7 @@
             <router-link to="/" class="nav-link"> Accueil </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="Pricing" class="nav-link"> Prix </router-link>
+            <router-link to="pricing" class="nav-link" disabled> Prix </router-link>
           </li>
           <li class="nav-item" v-if="isLoggedIn">
             <a class="nav-link" @click.prevent="logout"> Deconnexion </a>
@@ -24,9 +24,9 @@
     </nav>
     <!-- FIN NAV BAR -->
 
-    <!-- ROUTE -->
+    <!-- VUE ROUTE -->
     <router-view></router-view>
-    <!-- FIN ROUTE -->
+    <!-- FIN VUE ROUTE -->
 
     <!-- MODALS -->
       <!-- MODAL CONNECTION/INSCRIPTION -->
@@ -135,10 +135,19 @@ export default {
         console.log(response);
       });
     },
+    getClient(){
+      this.$http.get('http://172.20.10.6/wordpressAPI/public/index.php/api/customers/get')
+      .then(function(response){
+        console.log(response);
+      });
+    },
     logout(){
       this.$store.dispatch('logout')
       this.$router.push('/')
     }
+  },
+  created(){
+    return this.getClient();
   },
   computed: {
     isLoggedIn(){

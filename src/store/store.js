@@ -8,11 +8,17 @@ Vue.use(Resource)
 
 export const store = new Vuex.Store({
 	state: {
-		isLoggedIn: null
+		url: 'http://172.20.10.6/wordpressAPI/public/index.php/api/',
+		isLoggedIn: null,
+		pending: false,
+		Signed: null
 	},
 	getters: {
 		isLoggedIn: state => {
 			return state.isLoggedIn
+		},
+		Signed: state => {
+			return state.Signed
 		}
 	},
 	mutations: {
@@ -29,6 +35,20 @@ export const store = new Vuex.Store({
 		},
 		logout: state => {
 			state.isLoggedIn = false
+		},
+		sign: state => {
+			state.pending = true
+		},
+		sign_success: state => {
+			state.pending = false
+			state.Signed = true
+		},
+		sign_failure: state => {
+			state.pending = false
+			state.Signed = false
+		},
+		sign_destroy: state => {
+			state.Signed = null
 		}
 	},
 	actions: {
@@ -43,7 +63,7 @@ export const store = new Vuex.Store({
 		},
 		login({state,commit,rootState},log_info){
 			commit('login');
-			Vue.http.get('http://172.20.10.6/wordpressAPI/public/index.php/api/customers/compare',{params:  {mail: log_info.mail,pass: log_info.pass}})
+			Vue.http.get(state.url+'customers/compare',{params:  {mail: log_info.mail,pass: log_info.pass}})
 			.then( (response) => {
 		        if(response.status == 200){
 		        	commit('login_success');
@@ -62,6 +82,19 @@ export const store = new Vuex.Store({
 			localStorage.removeItem('id_token'),
 			delete Vue.http.headers.common['Authorization'],
 			commit('logout')
+		},
+		addCustomer({state,commit}, creds){
+			commit('sign');
+			Vue.http.post(state.url+'customer/add',creds)
+			.then((response) => {
+				if(response.status == 200){
+					commit('sign_success')
+				}
+				if(response.status == 401){
+					commit('sign_failure')
+					console.log('unauthorized')
+				}
+			})
 		}
 	}
 })

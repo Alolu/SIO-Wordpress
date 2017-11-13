@@ -21,7 +21,6 @@ router.beforeEach((to, from, next) => {
     next('/');
   } else { next(); }
 });
-
 new Vue({
   el: '#app',
   router,

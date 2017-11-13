@@ -8,7 +8,7 @@
           <div class="col-4">
 
             <!-- CAROUSEL -->
-            <div id="helloCarousel" class="carousel slide" data-ride="carousel">
+            <div id="helloCarousel" class="carousel slide rounded" data-ride="carousel">
               <ol class="carousel-indicators">
                 <li data-target="#helloCarousel" data-slide-to="0" class="active"></li>
                 <li data-target="#helloCarousel" data-slide-to="1"></li>
@@ -52,6 +52,19 @@
       </div>
     </div>
     <!-- FIN JUMBOTRON -->
+
+    <!-- PRESENTATION TEAM -->
+    <div class="container">
+      <div class="row">
+        <div class="col-4">
+          test
+        </div>
+        <div class="col-4">
+          test
+        </div>
+      </div>
+    </div>
+    <!-- FIN PRESENTATION TEAM -->
 
   </div>
 </template>

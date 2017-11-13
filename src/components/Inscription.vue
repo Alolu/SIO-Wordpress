@@ -1,11 +1,11 @@
 <template>
-	<div class="login">
+	<div class="inscription">
 		<div class="container mt-5">
 	        <form class="form-horizontal" role="form" method="POST" v-on:submit.prevent>
 	            <div class="row">
 	                <div class="col-md-3"></div>
 	                <div class="col-md-6">
-	                    <h2>Veuillez vous connecter</h2>
+	                    <h2>S'inscrire</h2>
 	                    <hr>
 	                </div>
 	            </div>
@@ -51,6 +51,46 @@
 	            </div>
 	            <div class="row">
 	                <div class="col-md-3"></div>
+	                <div class="col-md-6">
+	                    <div class="form-group">
+	                        <label class="sr-only" for="nom">Nom</label>
+	                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+	                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+	                            <input type="nom" name="nom" class="form-control" id="nom"
+	                                   placeholder="Nom" v-model="nom" required>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="col-md-3">
+	                    <div class="form-control-feedback">
+	                        <span class="text-danger align-middle">
+	                        <!-- Put password error message here -->    
+	                        </span>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="col-md-3"></div>
+	                <div class="col-md-6">
+	                    <div class="form-group">
+	                        <label class="sr-only" for="prenom">Prenom</label>
+	                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+	                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+	                            <input type="prenom" name="prenom" class="form-control" id="prenom"
+	                                   placeholder="Prenom" v-model="prenom" required>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="col-md-3">
+	                    <div class="form-control-feedback">
+	                        <span class="text-danger align-middle">
+	                        <!-- Put password error message here -->    
+	                        </span>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="col-md-3"></div>
 	                <div class="col-md-6" style="padding-top: .35rem">
 	                    <div class="form-check mb-2 mr-sm-2 mb-sm-0">
 	                        <label class="form-check-label">
@@ -64,9 +104,8 @@
 	            <div class="row" style="padding-top: 1rem">
 	                <div class="col-md-3"></div>
 	                <div class="col-md-6">
-	                    <button type="submit" @click="login()" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
-	                    <a class="btn btn-link" href="/password/reset">Mot de passe oublié?</a>
-	                    <router-link class="btn btn-link" :to="{ path: 'inscription', query: { redirect: redirect }}">Pas de compte?</router-link>
+	                    <button type="submit" @click="sign()" class="btn btn-success"><i class="fa fa-sign-in"></i> S'inscrire</button>
+	                    <router-link class="btn btn-link" :to="{ path: 'inscription', query: { redirect: redirect }}">Vous avez deja un compte?</router-link>
 	                </div>
 	            </div>
 	        </form>
@@ -74,42 +113,40 @@
 	</div>
 </template>
 <script>
-  import { mapActions } from 'vuex'	
   export default {
-    name: 'Login',
+    name: 'Hello',
     data(){
-    	return{
-    		mail: '',
-    		pass: '',
-    		redirect: this.$route.query.redirect
-    	}
+    	return {
+      		nom: '',
+      		prenom: '',
+      		mail: '',
+      		pass: '',
+      		redirect: this.$route.query.redirect
+      	}
     },
-    beforeRouteLeave (to, from, next) {
-    	if(to.meta.requiresAuth && !this.isLoggedIn){
-    		console.log("unauthorized");
-    	}else{
-    		next()
-    	}
-  	},
     methods: {
-    	login() {
-		    this.$store.dispatch('login',{
-		    	mail : this.mail,
-		    	pass : this.pass
-		    })
-		},
+    	sign(){
+    		this.$store.dispatch('addCustomer', {
+    			mail: this.mail,
+    			pass: this.pass,
+    			nom: this.nom,
+    			prenom: this.prenom
+    		})
+    	}
     },
     computed: {
-    	isLoggedIn: function(){
-    		return this.$store.getters.isLoggedIn
+    	Signed: function(){
+    		return this.$store.getters.Signed
     	}
     },
     watch: {
-    	isLoggedIn: function(){
-    		if(!this.$route.query.redirect){
-    			this.$router.push('/');
+    	Signed: function(){
+    		console.log(this.Signed);
+    		if(this.Signed){
+    			this.$router.push({path: '/login', query: this.redirect}),
+    			this.$store.commit('sign_destroy')
     		}else{
-    			this.$router.push(this.redirect)
+    			console.log('fail')
     		}
     	}
     }
